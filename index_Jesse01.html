@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS101_Quiz_CSharp_Subcultures</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 15mm 15mm;
+    @bottom-center {
+      content: "- Page " counter(page) " of " counter(pages) " -";
+      font-family: "Times New Roman", Times, serif;
+      font-size: 9pt;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: "Times New Roman", Times, Georgia, serif;
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #111;
+    background: #4a4e52;
+    margin: 0;
+    padding: 15px 0;
+  }
+
+  .screen-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 210mm;
+    margin: 0 auto 12px auto;
+    background: #212529;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 13px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  }
+
+  .screen-toolbar button {
+    background: #343a40;
+    color: #fff;
+    border: 1px solid #495057;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+
+  .screen-toolbar button:hover {
+    background: #495057;
+  }
+
+  .screen-toolbar button.primary {
+    background: #d63384;
+    border-color: #b02a6b;
+    font-weight: 500;
+  }
+
+  .screen-toolbar button.primary:hover {
+    background: #a02360;
+  }
+
+  .paper {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm 18mm;
+    margin: 0 auto 15px auto;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  }
+
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 4px;
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-size: 14pt;
+    text-transform: uppercase;
+    margin: 0 0 2px 0;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+
+  .header h2 {
+    font-size: 11pt;
+    font-weight: normal;
+    margin: 0 0 2px 0;
+  }
+
+  .header .course {
+    font-size: 12pt;
+    font-weight: bold;
+  }
+
+  .student-bar {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    border: 1px solid #000;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+    font-size: 10pt;
+    background: #fafafa;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .input-row label {
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .input-row input {
+    border: none;
+    border-bottom: 1px dotted #000;
+    width: 100%;
+    font-family: inherit;
+    font-size: 10pt;
+    background: transparent;
+    padding: 0 2px;
+  }
+
+  .input-row input:focus {
+    outline: none;
+    background: #fff8db;
+  }
+
+  .score-strip {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #444;
+    padding: 6px 12px;
+    margin-bottom: 14px;
+    font-size: 9.5pt;
+    background: #fdfdfd;
+  }
+
+  .sec-title {
+    font-size: 11pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 1px solid #000;
+    padding-bottom: 2px;
+    margin: 12px 0 8px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .sec-title .marks {
+    font-size: 9.5pt;
+    font-weight: normal;
+    text-transform: none;
+  }
+
+  .q-block {
+    margin-bottom: 10px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .q-title {
+    font-weight: bold;
+    font-size: 10pt;
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .q-desc {
+    font-size: 10pt;
+    margin-bottom: 4px;
+  }
+
+  code, pre {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 9.5pt;
+  }
+
+  code {
+    background: #f1f1f1;
+    padding: 1px 4px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+  }
+
+  pre.snippet {
+    background: #f8f9fa;
+    border: 1px solid #ccc;
+    border-left: 3px solid #d63384;
+    padding: 4px 8px;
+    margin: 4px 0;
+    line-height: 1.3;
+    font-size: 9pt;
+  }
+
+  .opt {
+    margin: 2px 0 2px 14px;
+    font-size: 9.5pt;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .opt input {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .write-box {
+    border: 1px solid #777;
+    background: #fff;
+    margin: 4px 0;
+    width: 100%;
+  }
+
+  .write-box.lined {
+    background-image: repeating-linear-gradient(transparent, transparent 21px, #e9ecef 22px);
+    line-height: 22px;
+  }
+
+  textarea.fill {
+    width: 100%;
+    height: 100%;
+    min-height: 44px;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 9.5pt;
+    line-height: inherit;
+    padding: 3px 6px;
+    resize: vertical;
+    display: block;
+  }
+
+  textarea.fill:focus {
+    outline: none;
+    background: rgba(255, 243, 196, 0.35);
+  }
+
+  .mono {
+    font-family: "Courier New", Courier, monospace !important;
+  }
+
+  .match-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 6px 0;
+  }
+
+  .match-table th, .match-table td {
+    border: 1px solid #000;
+    padding: 4px 8px;
+    text-align: left;
+  }
+
+  .match-table th {
+    background: #f0f0f0;
+  }
+
+  .match-table td.center {
+    text-align: center;
+  }
+
+  .ans-key {
+    display: none;
+    margin-top: 3px;
+    padding: 4px 8px;
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    color: #1b5e20;
+    font-size: 8.5pt;
+  }
+
+  .ans-key.show {
+    display: block;
+  }
+
+  .footer-rule {
+    text-align: center;
+    font-size: 8pt;
+    color: #555;
+    margin-top: 15px;
+    border-top: 1px solid #aaa;
+    padding-top: 3px;
+  }
+
+  @media print {
+    body {
+      background: none;
+      padding: 0;
+    }
+    .screen-toolbar {
+      display: none !important;
+    }
+    .paper {
+      width: 100%;
+      min-height: auto;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+    .write-box {
+      background-color: transparent !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="screen-toolbar">
+  <div>
+    <strong>CS101 TESTING PORTAL</strong> &bull; Beginner C#: Types, Variables &amp; Console
+  </div>
+  <div style="display: flex; gap: 8px;">
+    <button onclick="toggleKey()">Toggle Teacher Key</button>
+    <button onclick="clearForm()">Reset All Answers</button>
+    <button class="primary" onclick="window.print()">Print / Export as PDF</button>
+  </div>
+</div>
+
+<!-- PAGE 1 -->
+<div class="paper">
+  <div class="header">
+    <h1>Department of Applied Computing</h1>
+    <h2>Introduction to C# Programming &bull; Unit 1 Quiz</h2>
+    <div class="course">DATA TYPES, CONSOLE OUTPUT, AND VARIABLE SYNTAX</div>
+  </div>
+
+  <div class="student-bar">
+    <div class="input-row">
+      <label>Student Name / Handle:</label>
+      <input type="text">
+    </div>
+    <div class="input-row">
+      <label>Candidate ID:</label>
+      <input type="text">
+    </div>
+    <div class="input-row">
+      <label>Date:</label>
+      <input type="text">
+    </div>
+  </div>
+
+  <div class="score-strip">
+    <span><strong>Time Allowed:</strong> 45 Minutes</span>
+    <span><strong>Environment:</strong> C# (.NET 8.0)</span>
+    <span><strong>Maximum Marks:</strong> 50 Marks</span>
+  </div>
+
+  <!-- SECTION A -->
+  <div class="sec-title">
+    <span>Section A: C# Data Types Matching</span>
+    <span class="marks">[12 Marks &bull; 3 Marks Each]</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 1: Matching Themed Literals to C# Types</span>
+      <span>(12 Marks)</span>
+    </div>
+    <div class="q-desc">
+      Write the correct letter (<strong>A</strong>, <strong>B</strong>, <strong>C</strong>, or <strong>D</strong>) in the center column to match each value with its valid C# type keyword.
+    </div>
+
+    <table class="match-table">
+      <thead>
+        <tr>
+          <th style="width: 35%;">Literal Value</th>
+          <th style="width: 25%; text-align: center;">Your Choice (A-D)</th>
+          <th style="width: 40%;">C# Keyword</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>"Nya! :3"</code></td>
+          <td class="center"><input type="text" style="width: 35px; text-align: center; border: 1px solid #999;"></td>
+          <td><strong>A)</strong> <code>int</code> (Whole integer)</td>
+        </tr>
+        <tr>
+          <td><code>4</code> (Number of paws)</td>
+          <td class="center"><input type="text" style="width: 35px; text-align: center; border: 1px solid #999;"></td>
+          <td><strong>B)</strong> <code>string</code> (Text data)</td>
+        </tr>
+        <tr>
+          <td><code>true</code> (isGay)</td>
+          <td class="center"><input type="text" style="width: 35px; text-align: center; border: 1px solid #999;"></td>
+          <td><strong>C)</strong> <code>double</code> (Decimal value)</td>
+        </tr>
+        <tr>
+          <td><code>158.5</code> (Height in cm)</td>
+          <td class="center"><input type="text" style="width: 35px; text-align: center; border: 1px solid #999;"></td>
+          <td><strong>D)</strong> <code>bool</code> (Logical true/false)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ans-key">
+      <strong>Answers:</strong> <code>"Nya! :3"</code> &rarr; <strong>B</strong> (<code>string</code>) &bull; <code>4</code> &rarr; <strong>A</strong> (<code>int</code>) &bull; <code>true</code> &rarr; <strong>D</strong> (<code>bool</code>) &bull; <code>158.5</code> &rarr; <strong>C</strong> (<code>double</code>).
+    </div>
+  </div>
+
+  <!-- SECTION B -->
+  <div class="sec-title">
+    <span>Section B: Multiple Choice</span>
+    <span class="marks">[12 Marks &bull; 4 Marks Each]</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 2: Correct Console Output Method</span>
+      <span>(4 Marks)</span>
+    </div>
+    <div class="q-desc">
+      Which line of C# code correctly prints <strong>UwU</strong> to the terminal screen on its own line?
+    </div>
+    <label class="opt"><input type="radio" name="q2"> (A) <code>echo "UwU";</code></label>
+    <label class="opt"><input type="radio" name="q2"> (B) <code>Console.WriteLine("UwU");</code></label>
+    <label class="opt"><input type="radio" name="q2"> (C) <code>print("UwU");</code></label>
+    <label class="opt"><input type="radio" name="q2"> (D) <code>Console.Write(UwU);</code></label>
+    <div class="ans-key">
+      <strong>Answer: (B).</strong> In C#, <code>Console.WriteLine("UwU");</code> is the standard method for writing a line of text to standard output.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 3: Declaring a Boolean Variable</span>
+      <span>(4 Marks)</span>
+    </div>
+    <div class="q-desc">
+      Which statement correctly declares a boolean variable named <code>isFurry</code> set to <code>true</code>?
+    </div>
+    <label class="opt"><input type="radio" name="q3"> (A) <code>boolean isFurry = "true";</code></label>
+    <label class="opt"><input type="radio" name="q3"> (B) <code>bool isFurry = true;</code></label>
+    <label class="opt"><input type="radio" name="q3"> (C) <code>isFurry = True;</code></label>
+    <label class="opt"><input type="radio" name="q3"> (D) <code>string isFurry = true;</code></label>
+    <div class="ans-key">
+      <strong>Answer: (B).</strong> C# uses the <code>bool</code> keyword and lowercase <code>true</code> / <code>false</code> literals.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 4: Legal Variable Identifiers</span>
+      <span>(4 Marks)</span>
+    </div>
+    <div class="q-desc">
+      Which of the following variable names is <strong>invalid</strong> in C#?
+    </div>
+    <label class="opt"><input type="radio" name="q4"> (A) <code>catboy_level</code></label>
+    <label class="opt"><input type="radio" name="q4"> (B) <code>femboyRating</code></label>
+    <label class="opt"><input type="radio" name="q4"> (C) <code>fursona2</code></label>
+    <label class="opt"><input type="radio" name="q4"> (D) <code>2catboys</code></label>
+    <div class="ans-key">
+      <strong>Answer: (D) <code>2catboys</code>.</strong> Variable identifiers in C# cannot begin with a numeric digit.
+    </div>
+  </div>
+
+  <div class="footer-rule">CS101 Assessment &bull; Page 1 of 2 &bull; Turn Over to Page 2 &gt;&gt;</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="paper page-break">
+  <div class="header" style="border-bottom: 1px solid #444; margin-bottom: 8px;">
+    <h2>C# PROGRAMMING &bull; SECTION II &amp; III</h2>
+  </div>
+
+  <!-- SECTION C -->
+  <div class="sec-title">
+    <span>Section C: Output Tracing</span>
+    <span class="marks">[12 Marks &bull; 4 Marks Each]</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 5: String Joining vs Integer Addition</span>
+      <span>(4 Marks)</span>
+    </div>
+    <div class="q-desc">
+      Write the exact console output of the following two lines:
+      <pre class="snippet">Console.WriteLine("Cat" + "boy");
+Console.WriteLine(2 + 2);</pre>
+    </div>
+    <div class="write-box" style="height: 48px;">
+      <textarea class="fill" placeholder="Line 1 output:&#10;Line 2 output:"></textarea>
+    </div>
+    <div class="ans-key">
+      <strong>Output:</strong><br>
+      <code>Catboy</code> (String concatenation)<br>
+      <code>4</code> (Arithmetic integer addition)
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 6: Variable Reassignment</span>
+      <span>(4 Marks)</span>
+    </div>
+    <div class="q-desc">
+      Trace what value is printed when this code snippet runs:
+      <pre class="snippet">string outfit = "maid dress";
+outfit = "oversized hoodie";
+Console.WriteLine("Outfit: " + outfit);</pre>
+    </div>
+    <div class="write-box" style="height: 38px;">
+      <textarea class="fill" placeholder="Write exact output here..."></textarea>
+    </div>
+    <div class="ans-key">
+      <strong>Output:</strong> <code>Outfit: oversized hoodie</code>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 7: Single-Line Comments</span>
+      <span>(4 Marks)</span>
+    </div>
+    <div class="q-desc">
+      What value is printed by this snippet?
+      <pre class="snippet">int ears = 2;
+// ears = 4;
+Console.WriteLine(ears);</pre>
+    </div>
+    <div class="write-box" style="height: 38px;">
+      <textarea class="fill" placeholder="Write exact output here..."></textarea>
+    </div>
+    <div class="ans-key">
+      <strong>Output:</strong> <code>2</code> (The reassignment is commented out with <code>//</code> and ignored by the compiler).
+    </div>
+  </div>
+
+  <!-- SECTION D -->
+  <div class="sec-title">
+    <span>Section D: Syntax Fixing &amp; Code Writing</span>
+    <span class="marks">[14 Marks]</span>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 8: Fixing Syntax Errors</span>
+      <span>(4 Marks)</span>
+    </div>
+    <div class="q-desc">
+      The following line fails to compile in C#. Explain what is missing, and write the corrected line:
+      <pre class="snippet">Console.WriteLine("Nya! Meow")</pre>
+    </div>
+    <div class="write-box lined" style="height: 52px;">
+      <textarea class="fill"></textarea>
+    </div>
+    <div class="ans-key">
+      <strong>Explanation:</strong> The line lacks a terminating semicolon.<br>
+      <strong>Fixed line:</strong> <code>Console.WriteLine("Nya! Meow");</code>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 9: Storing and Printing a Fursona</span>
+      <span>(5 Marks)</span>
+    </div>
+    <div class="q-desc">
+      Write <strong>two complete lines of C# code</strong>:
+      <ol style="margin: 2px 0 4px 18px; padding: 0;">
+        <li>Declare a <code>string</code> variable named <code>fursona</code> and set it to <code>"Fennec Fox"</code>.</li>
+        <li>Print the variable to the console using <code>Console.WriteLine()</code>.</li>
+      </ol>
+    </div>
+    <div class="write-box" style="height: 58px;">
+      <textarea class="fill mono" placeholder="// Write your 2 lines of C# code here:&#10;"></textarea>
+    </div>
+    <div class="ans-key">
+      <strong>Example Solution:</strong>
+      <pre>string fursona = "Fennec Fox";
+Console.WriteLine(fursona);</pre>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">
+      <span>Question 10: Tail Math Calculation</span>
+      <span>(5 Marks)</span>
+    </div>
+    <div class="q-desc">
+      Write <strong>three complete lines of C# code</strong>:
+      <ol style="margin: 2px 0 4px 18px; padding: 0;">
+        <li>Declare an <code>int</code> variable named <code>catboys</code> with value <code>3</code>.</li>
+        <li>Declare an <code>int</code> variable named <code>furries</code> with value <code>2</code>.</li>
+        <li>Print the total sum of <code>catboys + furries</code> to the console.</li>
+      </ol>
+    </div>
+    <div class="write-box" style="height: 65px;">
+      <textarea class="fill mono" placeholder="// Write your 3 lines of C# code here:&#10;"></textarea>
+    </div>
+    <div class="ans-key">
+      <strong>Example Solution:</strong>
+      <pre>int catboys = 3;
+int furries = 2;
+Console.WriteLine(catboys + furries);</pre>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 15px; font-weight: bold; letter-spacing: 0.5px;">
+    --- END OF TEST PAPER ---
+  </div>
+
+  <div class="footer-rule">CS101 Assessment &bull; Page 2 of 2</div>
+</div>
+
+<script>
+  function toggleKey() {
+    const keys = document.querySelectorAll('.ans-key');
+    keys.forEach(k => k.classList.toggle('show'));
+  }
+
+  function clearForm() {
+    if (confirm("Clear all your answers on this quiz?")) {
+      document.querySelectorAll('textarea').forEach(t => t.value = '');
+      document.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    }
+  }
+</script>
+</body>
+</html>
